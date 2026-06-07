@@ -26,10 +26,12 @@ async function startCamera() {
     });
     video.srcObject = stream;
     video.onloadedmetadata = () => {
-      // Use CSS pixel dimensions for the viewfinder — far fewer pixels to process
-      // each frame, which eliminates lag on mobile. Full-res happens at capture time.
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(dpr, dpr);
       drawFrame();
     };
   } catch (e) {
