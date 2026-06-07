@@ -25,9 +25,9 @@ h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 12vw, 6r
 .btn:hover { background: var(--gold); color: var(--dark); }
 
 /* Camera page */
-.camera-page { position: fixed; inset: 0; background: #000; }
+.camera-page { position: fixed; inset: 0; background: #000; overflow: hidden; }
 
-.viewfinder-wrap { position: absolute; inset: 0; }
+.viewfinder-wrap { position: absolute; inset: 0; overflow: hidden; }
 #viewfinder { width: 100%; height: 100%; display: block; }
 .filter-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); pointer-events: none; white-space: nowrap; }
 

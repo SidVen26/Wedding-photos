@@ -26,8 +26,10 @@ async function startCamera() {
     });
     video.srcObject = stream;
     video.onloadedmetadata = () => {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // Use CSS pixel dimensions for the viewfinder — far fewer pixels to process
+      // each frame, which eliminates lag on mobile. Full-res happens at capture time.
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       drawFrame();
     };
   } catch (e) {
@@ -36,8 +38,13 @@ async function startCamera() {
 }
 
 function drawFrame() {
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  applyFilter(ctx, canvas.width, canvas.height, currentFilter);
+  const vw = video.videoWidth, vh = video.videoHeight;
+  const cw = canvas.width, ch = canvas.height;
+  // Cover-fit: scale video to fill the canvas without distortion
+  const scale = Math.max(cw / vw, ch / vh);
+  const sw = vw * scale, sh = vh * scale;
+  ctx.drawImage(video, (cw - sw) / 2, (ch - sh) / 2, sw, sh);
+  applyFilter(ctx, cw, ch, currentFilter);
   animFrame = requestAnimationFrame(drawFrame);
 }
 
@@ -113,7 +120,14 @@ flipBtn.addEventListener('click', () => {
 // Take photo
 shutterBtn.addEventListener('click', () => {
   cancelAnimationFrame(animFrame);
-  capturedDataURL = canvas.toDataURL('image/jpeg', 0.92);
+  // Capture at full video resolution for quality
+  const captureCanvas = document.createElement('canvas');
+  captureCanvas.width = video.videoWidth;
+  captureCanvas.height = video.videoHeight;
+  const captureCtx = captureCanvas.getContext('2d');
+  captureCtx.drawImage(video, 0, 0);
+  applyFilter(captureCtx, captureCanvas.width, captureCanvas.height, currentFilter);
+  capturedDataURL = captureCanvas.toDataURL('image/jpeg', 0.92);
   previewImg.src = capturedDataURL;
   previewOverlay.classList.remove('hidden');
 });
