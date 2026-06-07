@@ -40,6 +40,8 @@ app.get('/setup/auth', (req, res) => {
 
 // One-time setup: Google redirects here after the couple signs in
 app.get('/auth/callback', async (req, res) => {
+  console.log('OAuth callback query:', req.query);
+  if (req.query.error) return res.send(`Google returned an error: ${req.query.error}`);
   const { code } = req.query;
   try {
     const { data } = await axios.post('https://oauth2.googleapis.com/token', {
