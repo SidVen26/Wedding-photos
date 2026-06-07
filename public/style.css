@@ -25,24 +25,33 @@ h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 12vw, 6r
 .btn:hover { background: var(--gold); color: var(--dark); }
 
 /* Camera page */
-.camera-page { display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
+.camera-page { position: fixed; inset: 0; background: #000; }
+
+.viewfinder-wrap { position: absolute; inset: 0; }
+#viewfinder { width: 100%; height: 100%; display: block; }
+.filter-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); pointer-events: none; white-space: nowrap; }
 
 .cam-header {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
   display: flex; justify-content: space-between; align-items: center;
-  padding: calc(0.75rem + env(safe-area-inset-top)) 1.25rem 0.5rem;
-  flex-shrink: 0;
+  padding: max(0.75rem, env(safe-area-inset-top)) 1.25rem 1rem;
+  background: linear-gradient(to bottom, rgba(26,23,18,0.75), transparent);
 }
 .cam-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--cream); }
 .cam-date { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); }
 
-.viewfinder-wrap { position: relative; flex: 1; overflow: hidden; min-height: 0; }
-#viewfinder { width: 100%; height: 100%; object-fit: cover; display: block; }
-.filter-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); pointer-events: none; white-space: nowrap; }
+.controls {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem calc(1.5rem + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, rgba(26,23,18,0.75), transparent);
+}
 
 .filter-strip {
+  position: absolute; left: 0; right: 0; z-index: 10;
+  bottom: calc(72px + 2.5rem + env(safe-area-inset-bottom));
   display: flex; justify-content: center; gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  flex-shrink: 0;
+  padding: 0 1rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -50,34 +59,27 @@ h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 12vw, 6r
 .filter-strip::-webkit-scrollbar { display: none; }
 
 .filter-btn {
-  background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--muted);
+  background: rgba(26,23,18,0.5); border: 1px solid rgba(255,255,255,0.25); color: var(--muted);
   padding: 0.55rem 1.1rem;
   font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em;
   cursor: pointer; transition: all 0.15s; border-radius: 2px;
-  white-space: nowrap;
-  min-height: 44px;
+  white-space: nowrap; min-height: 44px;
   -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(4px);
 }
 .filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
 
-.controls {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.75rem 2.5rem calc(1.25rem + env(safe-area-inset-bottom));
-  flex-shrink: 0;
-}
 .shutter-btn {
   width: 72px; height: 72px; border-radius: 50%; border: 3px solid var(--cream);
   background: transparent; cursor: pointer; position: relative; transition: transform 0.1s;
-  -webkit-tap-highlight-color: transparent;
-  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; flex-shrink: 0;
 }
 .shutter-btn::after { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--cream); transition: opacity 0.1s; }
 .shutter-btn:active { transform: scale(0.93); }
 .icon-btn {
   background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--cream);
   width: 48px; height: 48px; border-radius: 50%; font-size: 1.3rem; cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; flex-shrink: 0;
 }
 
 /* Preview & success overlays */
