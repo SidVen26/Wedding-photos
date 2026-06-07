@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wedding Camera</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet"/>
+</head>
+<body class="camera-page">
+  <div class="grain"></div>
+
+  <header class="cam-header">
+    <span class="cam-title">Akshat & Mengyuan</span>
+    <span class="cam-date">Nov 20–21</span>
+  </header>
+
+  <div class="viewfinder-wrap">
+    <canvas id="viewfinder"></canvas>
+    <video id="video" autoplay playsinline muted style="display:none"></video>
+    <div class="filter-label" id="filter-label">Film Grain</div>
+  </div>
+
+  <div class="filter-strip">
+    <button class="filter-btn active" data-filter="grain">Grain</button>
+    <button class="filter-btn" data-filter="warm">Warm</button>
+    <button class="filter-btn" data-filter="bw">B&W</button>
+    <button class="filter-btn" data-filter="disposable">Disposable</button>
+  </div>
+
+  <div class="controls">
+    <button id="flip-btn" class="icon-btn" aria-label="Flip camera">⟳</button>
+    <button id="shutter" class="shutter-btn" aria-label="Take photo"></button>
+    <div style="width:44px"></div>
+  </div>
+
+  <div id="preview-overlay" class="preview-overlay hidden">
+    <div class="preview-inner">
+      <img id="preview-img" alt="Your photo"/>
+      <p class="preview-hint">Looking good!</p>
+      <div class="preview-actions">
+        <button id="retake-btn" class="btn-sec">Retake</button>
+        <button id="upload-btn" class="btn-pri">Upload 📷</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="success-overlay" class="preview-overlay hidden">
+    <div class="preview-inner">
+      <p style="font-size:3rem">💍</p>
+      <h2 class="success-title">Uploaded!</h2>
+      <p class="preview-hint">Your photo is now in the wedding album.</p>
+      <button id="another-btn" class="btn-pri">Take another</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

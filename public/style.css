@@ -1,0 +1,56 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #f5f0e8;
+  --dark: #1a1712;
+  --gold: #c9a84c;
+  --muted: #8a7f6e;
+}
+
+body { background: var(--dark); color: var(--cream); font-family: 'Jost', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Landing */
+.landing { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.center { text-align: center; padding: 2rem; }
+.eyebrow { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.8rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 12vw, 6rem); font-weight: 400; line-height: 1.05; color: var(--cream); }
+.amp { font-style: italic; color: var(--gold); }
+.sub { font-size: 0.9rem; color: var(--muted); margin: 2rem 0; line-height: 1.7; font-weight: 300; }
+.btn { display: inline-block; padding: 0.85rem 2.2rem; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.2s; }
+.btn:hover { background: var(--gold); color: var(--dark); }
+
+/* Camera page */
+.camera-page { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+.cam-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem 0.5rem; flex-shrink: 0; }
+.cam-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--cream); }
+.cam-date { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); }
+
+.viewfinder-wrap { position: relative; flex: 1; overflow: hidden; }
+#viewfinder { width: 100%; height: 100%; object-fit: cover; display: block; }
+.filter-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); pointer-events: none; }
+
+.filter-strip { display: flex; justify-content: center; gap: 0.5rem; padding: 0.75rem 1rem; flex-shrink: 0; }
+.filter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--muted); padding: 0.35rem 0.9rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; cursor: pointer; transition: all 0.15s; border-radius: 2px; }
+.filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+.controls { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 2.5rem 1.5rem; flex-shrink: 0; }
+.shutter-btn { width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--cream); background: transparent; cursor: pointer; position: relative; transition: transform 0.1s; }
+.shutter-btn::after { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--cream); transition: opacity 0.1s; }
+.shutter-btn:active { transform: scale(0.93); }
+.icon-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--cream); width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
+
+/* Preview & success overlays */
+.preview-overlay { position: fixed; inset: 0; background: rgba(15,13,10,0.95); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 2rem; }
+.preview-overlay.hidden { display: none; }
+.preview-inner { text-align: center; width: 100%; max-width: 360px; }
+.preview-inner img { width: 100%; border-radius: 2px; margin-bottom: 1.2rem; }
+.preview-hint { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+.preview-actions { display: flex; gap: 1rem; justify-content: center; }
+.btn-sec { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--muted); padding: 0.75rem 1.5rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; cursor: pointer; }
+.btn-pri { background: var(--gold); border: none; color: var(--dark); padding: 0.75rem 1.5rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 500; cursor: pointer; }
+.success-title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin: 0.5rem 0 1rem; }
